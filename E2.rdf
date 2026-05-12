@@ -1,0 +1,538 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:airline="https://wont-crash.de/trust-me/airline#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <rdfs:Class rdf:about="https://wont-crash.de/trust-me/airline#Trip">
+    <rdfs:comment>A complete booking consisting of one or more sequential flights.</rdfs:comment>
+    <rdfs:label>Trip</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="https://wont-crash.de/trust-me/airline#Connection">
+    <rdfs:comment>A bidirectional scheduled route between two airports. One resource per unordered pair; direction is resolved per Flight.</rdfs:comment>
+    <rdfs:label>Connection</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="https://wont-crash.de/trust-me/airline#Airport">
+    <rdfs:comment>An airport at which the airline operates.</rdfs:comment>
+    <rdfs:label>Airport</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="https://wont-crash.de/trust-me/airline#Flight">
+    <rdfs:comment>A single leg within a trip, travelling along a Connection in one direction.</rdfs:comment>
+    <rdfs:label>Flight</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="https://wont-crash.de/trust-me/airline#Customer">
+    <rdfs:comment>A passenger who books trips with the airline.</rdfs:comment>
+    <rdfs:label>Customer</rdfs:label>
+  </rdfs:Class>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#hasFirstFlight">
+    <rdfs:comment>Entry point into the ordered flight sequence of this trip.</rdfs:comment>
+    <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Trip"/>
+    <rdfs:label>hasFirstFlight</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#flightEndTime">
+    <rdfs:comment>Scheduled arrival date-time of this flight. Combined with flightStartTime and tripStartTime, allows computing elapsed time per flight in a trip (query b).</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:label>flightEndTime</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#flightStartTime">
+    <rdfs:comment>Scheduled departure date-time of this flight.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:label>flightStartTime</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#bookedBy">
+    <rdfs:comment>Links a trip to the customer who booked it. Answers query: who booked the trip?</rdfs:comment>
+    <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Customer"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Trip"/>
+    <rdfs:label>bookedBy</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#tripStartTime">
+    <rdfs:comment>Scheduled departure date-time of the first flight in this trip.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Trip"/>
+    <rdfs:label>tripStartTime</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#numberOfEmployees">
+    <rdfs:comment>Number of airline employees stationed at this airport.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
+    <rdfs:label>numberOfEmployees</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#tripEndTime">
+    <rdfs:comment>Scheduled arrival date-time of the last flight in this trip.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Trip"/>
+    <rdfs:label>tripEndTime</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#maxPassengers">
+    <rdfs:comment>Maximum number of passengers the assigned aircraft can carry.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Connection"/>
+    <rdfs:label>maxPassengers</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#bookingTimestamp">
+    <rdfs:comment>Date and time at which the trip was booked.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Trip"/>
+    <rdfs:label>bookingTimestamp</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#tripPrice">
+    <rdfs:comment>Total ticket price for the trip in EUR.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Trip"/>
+    <rdfs:label>tripPrice</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#seatClass">
+    <rdfs:comment>Travel class booked for this seat: 'Economy' or 'Business'.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:label>seatClass</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#passportNumber">
+    <rdfs:comment>Passport number used as the customer's unique identifier.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Customer"/>
+    <rdfs:label>passportNumber</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#partOfTrip">
+    <rdfs:comment>Back-link to the enclosing trip. Enables direct flight→trip lookup and efficient answering of query c (who booked the trip).</rdfs:comment>
+    <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Trip"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:label>partOfTrip</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#customerName">
+    <rdfs:comment>Full name of the customer.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Customer"/>
+    <rdfs:label>customerName</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#usesConnection">
+    <rdfs:comment>The scheduled connection this flight operates on.</rdfs:comment>
+    <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Connection"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:label>usesConnection</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#yearOfOperationsStart">
+    <rdfs:comment>Year in which the airline began operations at this airport.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
+    <rdfs:label>yearOfOperationsStart</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#arrivalAirport">
+    <rdfs:comment>Airport at which this flight arrives.</rdfs:comment>
+    <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:label>arrivalAirport</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#connectsAirport1">
+    <rdfs:comment>First endpoint of the bidirectional connection.</rdfs:comment>
+    <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Connection"/>
+    <rdfs:label>connectsAirport1</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#planeModel">
+    <rdfs:comment>Aircraft type assigned to this connection (e.g. 'Boeing 787 Dreamliner').</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Connection"/>
+    <rdfs:label>planeModel</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#connectsAirport2">
+    <rdfs:comment>Second endpoint of the bidirectional connection.</rdfs:comment>
+    <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Connection"/>
+    <rdfs:label>connectsAirport2</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#locatedInCity">
+    <rdfs:comment>Name of the city in which the airport is located.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
+    <rdfs:label>locatedInCity</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#departureAirport">
+    <rdfs:comment>Airport from which this flight departs. Together with arrivalAirport gives direction to the bidirectional Connection.</rdfs:comment>
+    <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:label>departureAirport</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#managerInCharge">
+    <rdfs:comment>Full name of the airline manager responsible for this airport.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
+    <rdfs:label>managerInCharge</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#nextFlight">
+    <rdfs:comment>Links to the subsequent flight in the trip sequence (singly-linked list). Encodes the 'connected in sequence' requirement directly in the graph.</rdfs:comment>
+    <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:label>nextFlight</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#seatNumber">
+    <rdfs:comment>Seat identifier assigned to the customer for this flight (e.g. '14A').</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
+    <rdfs:label>seatNumber</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#flightDurationMinutes">
+    <rdfs:comment>Scheduled flight duration in minutes.</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Connection"/>
+    <rdfs:label>flightDurationMinutes</rdfs:label>
+  </rdf:Property>
+  <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#iataCode">
+    <rdfs:comment>Three-letter IATA airport code (e.g. 'BER').</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
+    <rdfs:label>iataCode</rdfs:label>
+  </rdf:Property>
+  <airline:Trip rdf:about="https://wont-crash.de/trust-me/airline#Trip3">
+    <airline:hasFirstFlight>
+      <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip3_Flight1">
+        <airline:nextFlight>
+          <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip3_Flight2">
+            <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+            >2025-05-01T11:00:00</airline:flightStartTime>
+            <airline:arrivalAirport>
+              <airline:Airport rdf:about="https://wont-crash.de/trust-me/airline#LHR">
+                <airline:yearOfOperationsStart rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear"
+                >1993</airline:yearOfOperationsStart>
+                <airline:managerInCharge>Emma Thompson</airline:managerInCharge>
+                <airline:numberOfEmployees rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                >650</airline:numberOfEmployees>
+                <airline:locatedInCity>London</airline:locatedInCity>
+                <airline:iataCode>LHR</airline:iataCode>
+                <rdfs:label>Heathrow Airport</rdfs:label>
+              </airline:Airport>
+            </airline:arrivalAirport>
+            <airline:seatClass>Business</airline:seatClass>
+            <airline:seatNumber>7B</airline:seatNumber>
+            <airline:nextFlight>
+              <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip3_Flight3">
+                <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                >2025-05-01T15:00:00</airline:flightStartTime>
+                <airline:seatClass>Economy</airline:seatClass>
+                <airline:nextFlight>
+                  <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip3_Flight4">
+                    <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                    >2025-05-01T20:00:00</airline:flightStartTime>
+                    <airline:seatClass>Economy</airline:seatClass>
+                    <airline:departureAirport>
+                      <airline:Airport rdf:about="https://wont-crash.de/trust-me/airline#FCO">
+                        <airline:yearOfOperationsStart rdf:datatype=
+                        "http://www.w3.org/2001/XMLSchema#gYear"
+                        >2001</airline:yearOfOperationsStart>
+                        <airline:managerInCharge>Marco Rossi</airline:managerInCharge>
+                        <airline:numberOfEmployees rdf:datatype=
+                        "http://www.w3.org/2001/XMLSchema#int"
+                        >390</airline:numberOfEmployees>
+                        <airline:locatedInCity>Rome</airline:locatedInCity>
+                        <airline:iataCode>FCO</airline:iataCode>
+                        <rdfs:label>Leonardo da Vinci International Airport</rdfs:label>
+                      </airline:Airport>
+                    </airline:departureAirport>
+                    <airline:usesConnection>
+                      <airline:Connection rdf:about="https://wont-crash.de/trust-me/airline#Conn_BER_FCO">
+                        <airline:maxPassengers rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                        >180</airline:maxPassengers>
+                        <airline:planeModel>Airbus A320</airline:planeModel>
+                        <airline:flightDurationMinutes rdf:datatype=
+                        "http://www.w3.org/2001/XMLSchema#int"
+                        >150</airline:flightDurationMinutes>
+                        <airline:connectsAirport2 rdf:resource="https://wont-crash.de/trust-me/airline#FCO"/>
+                        <airline:connectsAirport1>
+                          <airline:Airport rdf:about="https://wont-crash.de/trust-me/airline#BER">
+                            <airline:yearOfOperationsStart rdf:datatype=
+                            "http://www.w3.org/2001/XMLSchema#gYear"
+                            >1998</airline:yearOfOperationsStart>
+                            <airline:managerInCharge>Hans Mueller</airline:managerInCharge>
+                            <airline:numberOfEmployees rdf:datatype=
+                            "http://www.w3.org/2001/XMLSchema#int"
+                            >450</airline:numberOfEmployees>
+                            <airline:locatedInCity>Berlin</airline:locatedInCity>
+                            <airline:iataCode>BER</airline:iataCode>
+                            <rdfs:label>Berlin Tegel Airport</rdfs:label>
+                          </airline:Airport>
+                        </airline:connectsAirport1>
+                        <rdfs:label>BER - FCO</rdfs:label>
+                      </airline:Connection>
+                    </airline:usesConnection>
+                    <airline:seatNumber>25C</airline:seatNumber>
+                    <rdfs:label>FCO to BER</rdfs:label>
+                    <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                    >2025-05-01T22:30:00</airline:flightEndTime>
+                    <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#BER"/>
+                    <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip3"/>
+                  </airline:Flight>
+                </airline:nextFlight>
+                <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#LHR"/>
+                <airline:seatNumber>12D</airline:seatNumber>
+                <rdfs:label>LHR to FCO</rdfs:label>
+                <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                >2025-05-01T17:30:00</airline:flightEndTime>
+                <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip3"/>
+                <airline:usesConnection>
+                  <airline:Connection rdf:about="https://wont-crash.de/trust-me/airline#Conn_FCO_LHR">
+                    <airline:maxPassengers rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                    >190</airline:maxPassengers>
+                    <airline:planeModel>Airbus A321</airline:planeModel>
+                    <airline:flightDurationMinutes rdf:datatype=
+                    "http://www.w3.org/2001/XMLSchema#int">150</airline:flightDurationMinutes>
+                    <airline:connectsAirport2 rdf:resource="https://wont-crash.de/trust-me/airline#LHR"/>
+                    <airline:connectsAirport1 rdf:resource="https://wont-crash.de/trust-me/airline#FCO"/>
+                    <rdfs:label>FCO - LHR</rdfs:label>
+                  </airline:Connection>
+                </airline:usesConnection>
+                <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#FCO"/>
+              </airline:Flight>
+            </airline:nextFlight>
+            <rdfs:label>BER to LHR</rdfs:label>
+            <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip3"/>
+            <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+            >2025-05-01T13:00:00</airline:flightEndTime>
+            <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#BER"/>
+            <airline:usesConnection>
+              <airline:Connection rdf:about="https://wont-crash.de/trust-me/airline#Conn_BER_LHR">
+                <airline:maxPassengers rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                >150</airline:maxPassengers>
+                <airline:planeModel>Airbus A319</airline:planeModel>
+                <airline:flightDurationMinutes rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                >120</airline:flightDurationMinutes>
+                <airline:connectsAirport2 rdf:resource="https://wont-crash.de/trust-me/airline#LHR"/>
+                <airline:connectsAirport1 rdf:resource="https://wont-crash.de/trust-me/airline#BER"/>
+                <rdfs:label>BER - LHR</rdfs:label>
+              </airline:Connection>
+            </airline:usesConnection>
+          </airline:Flight>
+        </airline:nextFlight>
+        <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#BER"/>
+        <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2025-05-01T09:00:00</airline:flightEndTime>
+        <airline:departureAirport>
+          <airline:Airport rdf:about="https://wont-crash.de/trust-me/airline#JFK">
+            <airline:yearOfOperationsStart rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear"
+            >1995</airline:yearOfOperationsStart>
+            <airline:managerInCharge>John Smith</airline:managerInCharge>
+            <airline:numberOfEmployees rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >820</airline:numberOfEmployees>
+            <airline:locatedInCity>New York</airline:locatedInCity>
+            <airline:iataCode>JFK</airline:iataCode>
+            <rdfs:label>John F. Kennedy International Airport</rdfs:label>
+          </airline:Airport>
+        </airline:departureAirport>
+        <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2025-05-01T00:00:00</airline:flightStartTime>
+        <airline:usesConnection>
+          <airline:Connection rdf:about="https://wont-crash.de/trust-me/airline#Conn_BER_JFK">
+            <airline:maxPassengers rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >250</airline:maxPassengers>
+            <airline:planeModel>Boeing 787 Dreamliner</airline:planeModel>
+            <airline:flightDurationMinutes rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >540</airline:flightDurationMinutes>
+            <airline:connectsAirport2 rdf:resource="https://wont-crash.de/trust-me/airline#JFK"/>
+            <airline:connectsAirport1 rdf:resource="https://wont-crash.de/trust-me/airline#BER"/>
+            <rdfs:label>BER - JFK</rdfs:label>
+          </airline:Connection>
+        </airline:usesConnection>
+        <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip3"/>
+        <airline:seatNumber>33A</airline:seatNumber>
+        <rdfs:label>JFK to BER</rdfs:label>
+        <airline:seatClass>Economy</airline:seatClass>
+      </airline:Flight>
+    </airline:hasFirstFlight>
+    <airline:tripEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2025-05-01T22:30:00</airline:tripEndTime>
+    <airline:tripStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2025-05-01T00:00:00</airline:tripStartTime>
+    <airline:tripPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+    >750.00</airline:tripPrice>
+    <airline:bookingTimestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2025-04-25T09:15:00</airline:bookingTimestamp>
+    <airline:bookedBy>
+      <airline:Customer rdf:about="https://wont-crash.de/trust-me/airline#Customer_KarlNapf">
+        <airline:passportNumber>PP345678</airline:passportNumber>
+        <airline:customerName>Karl Napf</airline:customerName>
+        <rdfs:label>Karl Napf</rdfs:label>
+      </airline:Customer>
+    </airline:bookedBy>
+    <rdfs:label>Trip3</rdfs:label>
+  </airline:Trip>
+  <airline:Trip rdf:about="https://wont-crash.de/trust-me/airline#Trip2">
+    <airline:hasFirstFlight>
+      <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip2_Flight1">
+        <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2025-05-01T00:00:00</airline:flightStartTime>
+        <airline:usesConnection rdf:resource="https://wont-crash.de/trust-me/airline#Conn_BER_LHR"/>
+        <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#BER"/>
+        <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#LHR"/>
+        <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip2"/>
+        <rdfs:label>LHR to BER</rdfs:label>
+        <airline:seatNumber>5A</airline:seatNumber>
+        <airline:seatClass>Business</airline:seatClass>
+        <airline:nextFlight>
+          <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip2_Flight2">
+            <rdfs:label>BER to FCO</rdfs:label>
+            <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip2"/>
+            <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+            >2025-05-01T04:00:00</airline:flightStartTime>
+            <airline:seatClass>Economy</airline:seatClass>
+            <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#BER"/>
+            <airline:usesConnection rdf:resource="https://wont-crash.de/trust-me/airline#Conn_BER_FCO"/>
+            <airline:seatNumber>18C</airline:seatNumber>
+            <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+            >2025-05-01T06:30:00</airline:flightEndTime>
+            <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#FCO"/>
+            <airline:nextFlight>
+              <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip2_Flight3">
+                <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip2"/>
+                <airline:usesConnection>
+                  <airline:Connection rdf:about="https://wont-crash.de/trust-me/airline#Conn_JFK_FCO">
+                    <airline:maxPassengers rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                    >300</airline:maxPassengers>
+                    <airline:planeModel>Boeing 777</airline:planeModel>
+                    <airline:flightDurationMinutes rdf:datatype=
+                    "http://www.w3.org/2001/XMLSchema#int">540</airline:flightDurationMinutes>
+                    <airline:connectsAirport2 rdf:resource="https://wont-crash.de/trust-me/airline#FCO"/>
+                    <airline:connectsAirport1 rdf:resource="https://wont-crash.de/trust-me/airline#JFK"/>
+                    <rdfs:label>JFK - FCO</rdfs:label>
+                  </airline:Connection>
+                </airline:usesConnection>
+                <airline:nextFlight>
+                  <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip2_Flight4">
+                    <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                    >2025-05-01T20:00:00</airline:flightStartTime>
+                    <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip2"/>
+                    <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#JFK"/>
+                    <airline:seatClass>Economy</airline:seatClass>
+                    <airline:seatNumber>24E</airline:seatNumber>
+                    <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#LHR"/>
+                    <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                    >2025-05-02T03:00:00</airline:flightEndTime>
+                    <rdfs:label>JFK to LHR</rdfs:label>
+                    <airline:usesConnection>
+                      <airline:Connection rdf:about="https://wont-crash.de/trust-me/airline#Conn_JFK_LHR">
+                        <airline:maxPassengers rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                        >350</airline:maxPassengers>
+                        <airline:planeModel>Boeing 747-400</airline:planeModel>
+                        <airline:flightDurationMinutes rdf:datatype=
+                        "http://www.w3.org/2001/XMLSchema#int"
+                        >420</airline:flightDurationMinutes>
+                        <airline:connectsAirport2 rdf:resource="https://wont-crash.de/trust-me/airline#LHR"/>
+                        <airline:connectsAirport1 rdf:resource="https://wont-crash.de/trust-me/airline#JFK"/>
+                        <rdfs:label>JFK - LHR</rdfs:label>
+                      </airline:Connection>
+                    </airline:usesConnection>
+                  </airline:Flight>
+                </airline:nextFlight>
+                <airline:seatNumber>11F</airline:seatNumber>
+                <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                >2025-05-01T18:00:00</airline:flightEndTime>
+                <airline:seatClass>Business</airline:seatClass>
+                <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#FCO"/>
+                <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#JFK"/>
+                <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                >2025-05-01T09:00:00</airline:flightStartTime>
+                <rdfs:label>FCO to JFK</rdfs:label>
+              </airline:Flight>
+            </airline:nextFlight>
+          </airline:Flight>
+        </airline:nextFlight>
+        <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2025-05-01T02:00:00</airline:flightEndTime>
+      </airline:Flight>
+    </airline:hasFirstFlight>
+    <airline:tripEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2025-05-02T03:00:00</airline:tripEndTime>
+    <airline:tripStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2025-05-01T00:00:00</airline:tripStartTime>
+    <airline:tripPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+    >980.50</airline:tripPrice>
+    <airline:bookingTimestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2025-04-20T14:30:00</airline:bookingTimestamp>
+    <airline:bookedBy>
+      <airline:Customer rdf:about="https://wont-crash.de/trust-me/airline#Customer_TonyTrinh">
+        <airline:passportNumber>PP789012</airline:passportNumber>
+        <airline:customerName>Tony Trinh</airline:customerName>
+        <rdfs:label>Tony Trinh</rdfs:label>
+      </airline:Customer>
+    </airline:bookedBy>
+    <rdfs:label>Trip2</rdfs:label>
+  </airline:Trip>
+  <airline:Trip rdf:about="https://wont-crash.de/trust-me/airline#Trip1">
+    <airline:hasFirstFlight>
+      <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip1_Flight1">
+        <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2025-05-01T00:00:00</airline:flightStartTime>
+        <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#FCO"/>
+        <rdfs:label>BER to FCO</rdfs:label>
+        <airline:nextFlight>
+          <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip1_Flight2">
+            <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+            >2025-05-01T05:00:00</airline:flightStartTime>
+            <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+            >2025-05-01T07:30:00</airline:flightEndTime>
+            <rdfs:label>FCO to LHR</rdfs:label>
+            <airline:usesConnection rdf:resource="https://wont-crash.de/trust-me/airline#Conn_FCO_LHR"/>
+            <airline:seatNumber>22B</airline:seatNumber>
+            <airline:seatClass>Economy</airline:seatClass>
+            <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#FCO"/>
+            <airline:nextFlight>
+              <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip1_Flight3">
+                <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#JFK"/>
+                <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#LHR"/>
+                <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                >2025-05-01T16:00:00</airline:flightEndTime>
+                <airline:usesConnection rdf:resource="https://wont-crash.de/trust-me/airline#Conn_JFK_LHR"/>
+                <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip1"/>
+                <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                >2025-05-01T09:00:00</airline:flightStartTime>
+                <airline:seatNumber>8C</airline:seatNumber>
+                <airline:nextFlight>
+                  <airline:Flight rdf:about="https://wont-crash.de/trust-me/airline#Trip1_Flight4">
+                    <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#BER"/>
+                    <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#JFK"/>
+                    <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                    >2025-05-02T04:00:00</airline:flightEndTime>
+                    <airline:usesConnection rdf:resource="https://wont-crash.de/trust-me/airline#Conn_BER_JFK"/>
+                    <airline:seatClass>Economy</airline:seatClass>
+                    <rdfs:label>JFK to BER</rdfs:label>
+                    <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip1"/>
+                    <airline:seatNumber>31D</airline:seatNumber>
+                    <airline:flightStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                    >2025-05-01T19:00:00</airline:flightStartTime>
+                  </airline:Flight>
+                </airline:nextFlight>
+                <airline:seatClass>Business</airline:seatClass>
+                <rdfs:label>LHR to JFK</rdfs:label>
+              </airline:Flight>
+            </airline:nextFlight>
+            <airline:arrivalAirport rdf:resource="https://wont-crash.de/trust-me/airline#LHR"/>
+            <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip1"/>
+          </airline:Flight>
+        </airline:nextFlight>
+        <airline:seatClass>Economy</airline:seatClass>
+        <airline:seatNumber>14A</airline:seatNumber>
+        <airline:departureAirport rdf:resource="https://wont-crash.de/trust-me/airline#BER"/>
+        <airline:usesConnection rdf:resource="https://wont-crash.de/trust-me/airline#Conn_BER_FCO"/>
+        <airline:partOfTrip rdf:resource="https://wont-crash.de/trust-me/airline#Trip1"/>
+        <airline:flightEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2025-05-01T02:30:00</airline:flightEndTime>
+      </airline:Flight>
+    </airline:hasFirstFlight>
+    <airline:tripEndTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2025-05-02T04:00:00</airline:tripEndTime>
+    <airline:tripStartTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2025-05-01T00:00:00</airline:tripStartTime>
+    <airline:tripPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"
+    >1250.00</airline:tripPrice>
+    <airline:bookingTimestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2025-04-15T10:00:00</airline:bookingTimestamp>
+    <airline:bookedBy>
+      <airline:Customer rdf:about="https://wont-crash.de/trust-me/airline#Customer_TimurSultanov">
+        <airline:passportNumber>PP123456</airline:passportNumber>
+        <airline:customerName>Timur Sultanov</airline:customerName>
+        <rdfs:label>Timur Sultanov</rdfs:label>
+      </airline:Customer>
+    </airline:bookedBy>
+    <rdfs:label>Trip1</rdfs:label>
+  </airline:Trip>
+</rdf:RDF>
