@@ -30,7 +30,7 @@
     <rdfs:label>hasFirstFlight</rdfs:label>
   </rdf:Property>
   <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#flightEndTime">
-    <rdfs:comment>Scheduled arrival date-time of this flight. Combined with flightStartTime and tripStartTime, allows computing elapsed time per flight in a trip (query b).</rdfs:comment>
+    <rdfs:comment>Scheduled arrival date-time of this flight.</rdfs:comment>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
     <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
     <rdfs:label>flightEndTime</rdfs:label>
@@ -96,7 +96,7 @@
     <rdfs:label>passportNumber</rdfs:label>
   </rdf:Property>
   <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#partOfTrip">
-    <rdfs:comment>Back-link to the enclosing trip. Enables direct flight→trip lookup and efficient answering of query c (who booked the trip).</rdfs:comment>
+    <rdfs:comment>Back-link to the enclosing trip. Enables direct flight→trip lookup.</rdfs:comment>
     <rdfs:range rdf:resource="https://wont-crash.de/trust-me/airline#Trip"/>
     <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Flight"/>
     <rdfs:label>partOfTrip</rdfs:label>
@@ -132,7 +132,7 @@
     <rdfs:label>connectsAirport1</rdfs:label>
   </rdf:Property>
   <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#planeModel">
-    <rdfs:comment>Aircraft type assigned to this connection (e.g. 'Boeing 787 Dreamliner').</rdfs:comment>
+    <rdfs:comment>Aircraft type assigned to this connection.</rdfs:comment>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Connection"/>
     <rdfs:label>planeModel</rdfs:label>
@@ -180,7 +180,7 @@
     <rdfs:label>flightDurationMinutes</rdfs:label>
   </rdf:Property>
   <rdf:Property rdf:about="https://wont-crash.de/trust-me/airline#iataCode">
-    <rdfs:comment>Three-letter IATA airport code (e.g. 'BER').</rdfs:comment>
+    <rdfs:comment>Three-letter IATA airport code.</rdfs:comment>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:domain rdf:resource="https://wont-crash.de/trust-me/airline#Airport"/>
     <rdfs:label>iataCode</rdfs:label>
@@ -250,7 +250,7 @@
                             >450</airline:numberOfEmployees>
                             <airline:locatedInCity>Berlin</airline:locatedInCity>
                             <airline:iataCode>BER</airline:iataCode>
-                            <rdfs:label>Berlin Tegel Airport</rdfs:label>
+                            <rdfs:label>Willi Brandt Airport</rdfs:label>
                           </airline:Airport>
                         </airline:connectsAirport1>
                         <rdfs:label>BER - FCO</rdfs:label>
