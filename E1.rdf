@@ -1,0 +1,30 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://uni-trier.de/wi2/"
+    xmlns:j.1="http://schema.org/">
+  <rdf:Description rdf:about="https://www.uni-trier.de/universitaet/fachbereiche-faecher/fachbereich-iv/faecher/informatikwissenschaften/professuren/wirtschaftsinformatik-2/professur">
+    <j.1:creator>
+      <rdf:Description rdf:about="http://uni-trier.de/wi2/RalphBergmann">
+        <j.1:teaches>
+          <rdf:Description rdf:about="http://uni-trier.de/wi2/SemanticTechnologies">
+            <j.1:hasPart>
+              <rdf:Description rdf:about="http://uni-trier.de/wi2/ProjectSeminarST">
+                <j.0:numberOfAssignments rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                >3</j.0:numberOfAssignments>
+                <j.1:name>Project Seminar Semantic Technologies</j.1:name>
+              </rdf:Description>
+            </j.1:hasPart>
+            <j.1:name>Semantic Technologies</j.1:name>
+          </rdf:Description>
+        </j.1:teaches>
+        <j.1:email>bergmann@uni-trier.de</j.1:email>
+        <j.1:name>Ralph Bergmann</j.1:name>
+      </rdf:Description>
+    </j.1:creator>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://uni-trier.de/wi2/AlexanderSchultheis">
+    <j.1:email>Alexander.Schultheis@uni-trier.de</j.1:email>
+    <j.1:name>Alexander Schultheis</j.1:name>
+    <j.1:teaches rdf:resource="http://uni-trier.de/wi2/ProjectSeminarST"/>
+  </rdf:Description>
+</rdf:RDF>
