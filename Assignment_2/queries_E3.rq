@@ -1,0 +1,194 @@
+# =====================================================================
+# Exercise 3 - Querying the DBLP ontology with SPARQL
+# Endpoint: https://sparql.dblp.org/  (QLever engine, SPARQL 1.1)
+# Schema namespace: https://dblp.org/rdf/schema#
+# Verified against the live endpoint on 2026-06-02.
+# NOTE: DBLP is rebuilt monthly, so absolute numbers may drift.
+# Paste each query (including its PREFIX lines) into the endpoint.
+# =====================================================================
+
+
+# ---------------------------------------------------------------------
+# a) How many triples / statements are in the ontology?
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+
+SELECT (COUNT(*) AS ?tripleCount)
+WHERE {
+  ?s ?p ?o .
+}
+# Result 2026-06-02: 1 574 328 480
+
+
+# ---------------------------------------------------------------------
+# b) How many publications are in the ontology?
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+
+SELECT (COUNT(?publication) AS ?publicationCount)
+WHERE {
+  ?publication a dblp:Publication .
+}
+# Result 2026-06-02: 8 554 462
+
+
+# ---------------------------------------------------------------------
+# c) Name of the author with ORCID 0000-0002-5515-7158
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+
+SELECT ?author ?name
+WHERE {
+  ?author dblp:orcid             <https://orcid.org/0000-0002-5515-7158> ;
+          dblp:primaryCreatorName ?name .
+}
+# Result: https://dblp.org/pid/b/RalphBergmann  ->  "Ralph Bergmann"
+
+
+# ---------------------------------------------------------------------
+# d) How many authors have a Wikipedia page?
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+
+SELECT (COUNT(DISTINCT ?author) AS ?authorsWithWikipedia)
+WHERE {
+  ?author dblp:wikipedia ?wikipediaPage .
+}
+# Result 2026-06-02: 9 899
+
+
+# ---------------------------------------------------------------------
+# e) Papers whose title contains "CBR" (limit 10)
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+
+SELECT ?paper ?title
+WHERE {
+  ?paper dblp:title ?title .
+  FILTER (CONTAINS(?title, "CBR"))
+}
+LIMIT 10
+
+
+# ---------------------------------------------------------------------
+# f) Co-authors on the joint Bergmann-Schultheis papers: in which
+#    books / proceedings / journals did THOSE co-authors publish, and
+#    how many of their publications appeared there (top 10).
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+
+SELECT ?venue (COUNT(DISTINCT ?coauthorPaper) AS ?numPublications)
+WHERE {
+  # (1) publications co-authored by BOTH Bergmann and Schultheis
+  ?jointPaper dblp:authoredBy <https://dblp.org/pid/b/RalphBergmann> ;
+              dblp:authoredBy <https://dblp.org/pid/321/8225> ;
+              dblp:authoredBy ?coauthor .
+
+  # (2) keep only the OTHER co-authors
+  FILTER (?coauthor != <https://dblp.org/pid/b/RalphBergmann> &&
+          ?coauthor != <https://dblp.org/pid/321/8225>)
+
+  # (3) every publication of those co-authors and the venue it appeared in
+  ?coauthorPaper dblp:authoredBy  ?coauthor ;
+                 dblp:publishedIn ?venue .
+}
+GROUP BY ?venue
+ORDER BY DESC(?numPublications)
+LIMIT 10
+
+
+# ---------------------------------------------------------------------
+# g) Publications since 2020 with Bergmann OR Timm as author
+#    (DFKI branch Trier). Return the count.
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+SELECT (COUNT(DISTINCT ?publication) AS ?numPublications)
+WHERE {
+  VALUES ?author {
+    <https://dblp.org/pid/b/RalphBergmann>
+    <https://dblp.org/pid/60/2246>          # Ingo J. Timm
+  }
+  ?publication dblp:authoredBy        ?author ;
+               dblp:yearOfPublication ?year .
+  # yearOfPublication is typed xsd:gYear -> cast before comparing (see notes)
+  FILTER (xsd:integer(STR(?year)) >= 2020)
+}
+
+
+# ---------------------------------------------------------------------
+# h) German researchers (affiliation contains "Germany") with at least
+#    800 publications; one row per person, publications counted once.
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+
+SELECT ?researcher ?name
+       (SAMPLE(?aff) AS ?affiliation)
+       (COUNT(DISTINCT ?publication) AS ?numPublications)
+WHERE {
+  ?researcher a                       dblp:Person ;
+              dblp:primaryCreatorName ?name ;
+              dblp:affiliation        ?aff .
+  FILTER (CONTAINS(?aff, "Germany"))
+  ?publication dblp:authoredBy ?researcher .
+}
+GROUP BY ?researcher ?name
+HAVING (COUNT(DISTINCT ?publication) >= 800)
+ORDER BY DESC(?numPublications)
+LIMIT 10
+
+
+# ---------------------------------------------------------------------
+# i) Bergmann's co-authors ranked by their number of FIRST-authored
+#    publications. Name, affiliation, ORCID ("unknown" if absent),
+#    count. Authors without affiliation are still included. (limit 12)
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+
+SELECT ?coauthor ?name
+       (COALESCE(SAMPLE(?aff),     "no affiliation") AS ?affiliation)
+       (COALESCE(SAMPLE(?orcidId), "unknown")        AS ?orcid)
+       (COUNT(DISTINCT ?firstAuthoredPaper) AS ?numFirstAuthored)
+WHERE {
+  # co-authors of Ralph Bergmann (anybody sharing a paper with him)
+  ?sharedPaper dblp:authoredBy <https://dblp.org/pid/b/RalphBergmann> ;
+               dblp:authoredBy ?coauthor .
+  FILTER (?coauthor != <https://dblp.org/pid/b/RalphBergmann>)
+  ?coauthor dblp:primaryCreatorName ?name .
+
+  # publications in which the co-author is the FIRST author (ordinal 1)
+  ?firstAuthoredPaper dblp:hasSignature ?sig .
+  ?sig dblp:signatureCreator ?coauthor ;
+       dblp:signatureOrdinal ?ordinal .
+  FILTER (?ordinal = 1)
+
+  OPTIONAL { ?coauthor dblp:affiliation ?aff }
+  OPTIONAL { ?coauthor dblp:orcid       ?orcidId }
+}
+GROUP BY ?coauthor ?name
+ORDER BY DESC(?numFirstAuthored)
+LIMIT 12
+
+
+# ---------------------------------------------------------------------
+# j) Most recent publication (co-)authored by Ralph Bergmann.
+#    Title, first author, number of authors, year.
+# ---------------------------------------------------------------------
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+
+SELECT ?publication ?title ?firstAuthorName ?numAuthors ?year
+WHERE {
+  ?publication dblp:authoredBy        <https://dblp.org/pid/b/RalphBergmann> ;
+               dblp:title             ?title ;
+               dblp:yearOfPublication ?year ;
+               dblp:numberOfCreators  ?numAuthors ;
+               dblp:hasSignature      ?sig .
+  # first author = signature with ordinal 1
+  ?sig dblp:signatureOrdinal ?ordinal ;
+       dblp:signatureCreator ?firstAuthor .
+  FILTER (?ordinal = 1)
+  ?firstAuthor dblp:primaryCreatorName ?firstAuthorName .
+}
+ORDER BY DESC(?year)   # gYear values share a datatype, so ordering is well defined
+LIMIT 1
