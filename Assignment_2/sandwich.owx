@@ -1,0 +1,817 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/semtec/ontologies/sandwich"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/semtec/ontologies/sandwich">
+    <Prefix name="" IRI="http://www.semanticweb.org/semtec/ontologies/sandwich#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal xml:lang="de">Loesung zu Aufgabe 4 (Familiarisierung mit Protege), Portfolio-Aufgabe 2, Semantische Technologien, Universitaet Trier. Die Modellierung folgt durchgehend den Konventionen des Manchester OWL-Tutorials mit der Pizza-Ontologie als Begleitbeispiel: ein disjunktes primitives Klassengeruest, definierte Klassen fuer die vom Reasoner abgeleitete Polyhierarchie, Existenz-/All-/Kardinalitaets-Restriktionen sowie CamelCase-Benennung.</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <Literal xml:lang="de">Sandwich-Ontologie</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="#Avocado"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Baguette"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Basil"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Bread"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Cheese"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ciabatta"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Cucumber"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Fish"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#GreenSalad"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ketchup"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Mayonnaise"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Meat"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Mozzarella"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Prosciutto"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Salami"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Salmon"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Sandwich"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#SandwichIngredient"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#SandwichOnlyVegetables"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#SandwichWithoutFish"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#SandwichWithoutMeat"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Sauce"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#TomatoSauce"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Tuna"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Vegetable"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#WhiteBread"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#WholeWheatBread"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasIngredient"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isIngredientOf"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#ItalianSandwich"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#ProsciuttoSandwich"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#SalmonSandwich"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#avocado"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#baguette"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#basil"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#ciabatta"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#cucumber"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#greenSalad"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#ketchup"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#mayonnaise"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#mozzarella"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#prosciutto"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#salami"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#salmon"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#tomatoSauce"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#tuna"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#whiteBread"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#wholeWheatBread"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="#SandwichOnlyVegetables"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Sandwich"/>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasIngredient"/>
+                <ObjectUnionOf>
+                    <Class IRI="#Bread"/>
+                    <Class IRI="#Sauce"/>
+                    <Class IRI="#Vegetable"/>
+                </ObjectUnionOf>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#SandwichWithoutFish"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Sandwich"/>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasIngredient"/>
+                <ObjectComplementOf>
+                    <Class IRI="#Fish"/>
+                </ObjectComplementOf>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#SandwichWithoutMeat"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Sandwich"/>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasIngredient"/>
+                <ObjectComplementOf>
+                    <Class IRI="#Meat"/>
+                </ObjectComplementOf>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="#Avocado"/>
+        <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Baguette"/>
+        <Class IRI="#Bread"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Basil"/>
+        <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Bread"/>
+        <Class IRI="#SandwichIngredient"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cheese"/>
+        <Class IRI="#SandwichIngredient"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Ciabatta"/>
+        <Class IRI="#Bread"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cucumber"/>
+        <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Fish"/>
+        <Class IRI="#SandwichIngredient"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#GreenSalad"/>
+        <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Ketchup"/>
+        <Class IRI="#Sauce"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Mayonnaise"/>
+        <Class IRI="#Sauce"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Meat"/>
+        <Class IRI="#SandwichIngredient"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Mozzarella"/>
+        <Class IRI="#Cheese"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Prosciutto"/>
+        <Class IRI="#Meat"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Salami"/>
+        <Class IRI="#Meat"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Salmon"/>
+        <Class IRI="#Fish"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Sandwich"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasIngredient"/>
+            <Class IRI="#Sauce"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Sandwich"/>
+        <ObjectMinCardinality cardinality="2">
+            <ObjectProperty IRI="#hasIngredient"/>
+            <ObjectIntersectionOf>
+                <Class IRI="#SandwichIngredient"/>
+                <ObjectComplementOf>
+                    <Class IRI="#Bread"/>
+                </ObjectComplementOf>
+            </ObjectIntersectionOf>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Sandwich"/>
+        <ObjectExactCardinality cardinality="2">
+            <ObjectProperty IRI="#hasIngredient"/>
+            <Class IRI="#Bread"/>
+        </ObjectExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#SandwichOnlyVegetables"/>
+        <Class IRI="#Sandwich"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#SandwichWithoutFish"/>
+        <Class IRI="#Sandwich"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#SandwichWithoutMeat"/>
+        <Class IRI="#Sandwich"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Sauce"/>
+        <Class IRI="#SandwichIngredient"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#TomatoSauce"/>
+        <Class IRI="#Sauce"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tuna"/>
+        <Class IRI="#Fish"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Vegetable"/>
+        <Class IRI="#SandwichIngredient"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#WhiteBread"/>
+        <Class IRI="#Bread"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#WholeWheatBread"/>
+        <Class IRI="#Bread"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#Avocado"/>
+        <Class IRI="#Basil"/>
+        <Class IRI="#Cucumber"/>
+        <Class IRI="#GreenSalad"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Baguette"/>
+        <Class IRI="#Ciabatta"/>
+        <Class IRI="#WhiteBread"/>
+        <Class IRI="#WholeWheatBread"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Bread"/>
+        <Class IRI="#Cheese"/>
+        <Class IRI="#Fish"/>
+        <Class IRI="#Meat"/>
+        <Class IRI="#Sauce"/>
+        <Class IRI="#Vegetable"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Ketchup"/>
+        <Class IRI="#Mayonnaise"/>
+        <Class IRI="#TomatoSauce"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Prosciutto"/>
+        <Class IRI="#Salami"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Salmon"/>
+        <Class IRI="#Tuna"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Sandwich"/>
+        <Class IRI="#SandwichIngredient"/>
+    </DisjointClasses>
+    <ClassAssertion>
+        <Class IRI="#SandwichWithoutFish"/>
+        <NamedIndividual IRI="#ItalianSandwich"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#SandwichWithoutMeat"/>
+        <NamedIndividual IRI="#ItalianSandwich"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#SandwichWithoutFish"/>
+        <NamedIndividual IRI="#ProsciuttoSandwich"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#SandwichWithoutMeat"/>
+        <NamedIndividual IRI="#SalmonSandwich"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Avocado"/>
+        <NamedIndividual IRI="#avocado"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Baguette"/>
+        <NamedIndividual IRI="#baguette"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Basil"/>
+        <NamedIndividual IRI="#basil"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Ciabatta"/>
+        <NamedIndividual IRI="#ciabatta"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Cucumber"/>
+        <NamedIndividual IRI="#cucumber"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#GreenSalad"/>
+        <NamedIndividual IRI="#greenSalad"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Ketchup"/>
+        <NamedIndividual IRI="#ketchup"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Mayonnaise"/>
+        <NamedIndividual IRI="#mayonnaise"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Mozzarella"/>
+        <NamedIndividual IRI="#mozzarella"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Prosciutto"/>
+        <NamedIndividual IRI="#prosciutto"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Salami"/>
+        <NamedIndividual IRI="#salami"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Salmon"/>
+        <NamedIndividual IRI="#salmon"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#TomatoSauce"/>
+        <NamedIndividual IRI="#tomatoSauce"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Tuna"/>
+        <NamedIndividual IRI="#tuna"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#WhiteBread"/>
+        <NamedIndividual IRI="#whiteBread"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#WholeWheatBread"/>
+        <NamedIndividual IRI="#wholeWheatBread"/>
+    </ClassAssertion>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="#ItalianSandwich"/>
+        <NamedIndividual IRI="#ProsciuttoSandwich"/>
+        <NamedIndividual IRI="#SalmonSandwich"/>
+        <NamedIndividual IRI="#avocado"/>
+        <NamedIndividual IRI="#baguette"/>
+        <NamedIndividual IRI="#basil"/>
+        <NamedIndividual IRI="#ciabatta"/>
+        <NamedIndividual IRI="#cucumber"/>
+        <NamedIndividual IRI="#greenSalad"/>
+        <NamedIndividual IRI="#ketchup"/>
+        <NamedIndividual IRI="#mayonnaise"/>
+        <NamedIndividual IRI="#mozzarella"/>
+        <NamedIndividual IRI="#prosciutto"/>
+        <NamedIndividual IRI="#salami"/>
+        <NamedIndividual IRI="#salmon"/>
+        <NamedIndividual IRI="#tomatoSauce"/>
+        <NamedIndividual IRI="#tuna"/>
+        <NamedIndividual IRI="#whiteBread"/>
+        <NamedIndividual IRI="#wholeWheatBread"/>
+    </DifferentIndividuals>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ItalianSandwich"/>
+        <NamedIndividual IRI="#baguette"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ItalianSandwich"/>
+        <NamedIndividual IRI="#basil"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ItalianSandwich"/>
+        <NamedIndividual IRI="#ciabatta"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ItalianSandwich"/>
+        <NamedIndividual IRI="#mozzarella"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ItalianSandwich"/>
+        <NamedIndividual IRI="#tomatoSauce"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ProsciuttoSandwich"/>
+        <NamedIndividual IRI="#baguette"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ProsciuttoSandwich"/>
+        <NamedIndividual IRI="#cucumber"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ProsciuttoSandwich"/>
+        <NamedIndividual IRI="#ketchup"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ProsciuttoSandwich"/>
+        <NamedIndividual IRI="#prosciutto"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#ProsciuttoSandwich"/>
+        <NamedIndividual IRI="#whiteBread"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#SalmonSandwich"/>
+        <NamedIndividual IRI="#avocado"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#SalmonSandwich"/>
+        <NamedIndividual IRI="#ciabatta"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#SalmonSandwich"/>
+        <NamedIndividual IRI="#mayonnaise"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#SalmonSandwich"/>
+        <NamedIndividual IRI="#salmon"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <NamedIndividual IRI="#SalmonSandwich"/>
+        <NamedIndividual IRI="#wholeWheatBread"/>
+    </ObjectPropertyAssertion>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <ObjectProperty IRI="#isIngredientOf"/>
+    </InverseObjectProperties>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <Class IRI="#Sandwich"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#isIngredientOf"/>
+        <Class IRI="#SandwichIngredient"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasIngredient"/>
+        <Class IRI="#SandwichIngredient"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#isIngredientOf"/>
+        <Class IRI="#Sandwich"/>
+    </ObjectPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Avocado</IRI>
+        <Literal xml:lang="de">Avocado</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Baguette</IRI>
+        <Literal xml:lang="de">Baguette</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Basil</IRI>
+        <Literal xml:lang="de">Basilikum</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Bread</IRI>
+        <Literal xml:lang="de">Brot-Zutat. Es werden vier Sorten modelliert (Ciabatta, Baguette, WhiteBread, WholeWheatBread); die Aufgabe verlangt die Modellierung von mindestens zwei Sorten.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Bread</IRI>
+        <Literal xml:lang="de">Brot</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Cheese</IRI>
+        <Literal xml:lang="de">Kaese-Zutat (z. B. Mozzarella).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Cheese</IRI>
+        <Literal xml:lang="de">Kaese</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Ciabatta</IRI>
+        <Literal xml:lang="de">Ciabatta</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Cucumber</IRI>
+        <Literal xml:lang="de">Gurke</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Fish</IRI>
+        <Literal xml:lang="de">Fisch-Zutat (z. B. Salmon, Tuna).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Fish</IRI>
+        <Literal xml:lang="de">Fisch</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#GreenSalad</IRI>
+        <Literal xml:lang="de">Gruener Salat</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ItalianSandwich</IRI>
+        <Literal xml:lang="de">Individuum. Zutaten: Ciabatta, Baguette, Tomatensauce, Basilikum, Mozzarella. Asserted als SandwichWithoutFish und SandwichWithoutMeat (enthaelt weder Fisch noch Fleisch).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ItalianSandwich</IRI>
+        <Literal xml:lang="de">Italienisches Sandwich</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Ketchup</IRI>
+        <Literal xml:lang="de">Ketchup</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Mayonnaise</IRI>
+        <Literal xml:lang="de">Mayonnaise</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Meat</IRI>
+        <Literal xml:lang="de">Fleisch-Zutat (z. B. Prosciutto/Schinken, Salami).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Meat</IRI>
+        <Literal xml:lang="de">Fleisch</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Mozzarella</IRI>
+        <Literal xml:lang="de">Mozzarella</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Prosciutto</IRI>
+        <Literal xml:lang="de">Prosciutto (Schinken)</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ProsciuttoSandwich</IRI>
+        <Literal xml:lang="de">Individuum. Zutaten: Weissbrot, Baguette, Ketchup, Prosciutto, Gurke. Asserted als SandwichWithoutFish. Es enthaelt Fleisch (Prosciutto) und ist daher NICHT ohne Fleisch - der Reasoner darf es nicht als SandwichWithoutMeat klassifizieren.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ProsciuttoSandwich</IRI>
+        <Literal xml:lang="de">Prosciutto-Sandwich</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Salami</IRI>
+        <Literal xml:lang="de">Salami</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Salmon</IRI>
+        <Literal xml:lang="de">Lachs</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#SalmonSandwich</IRI>
+        <Literal xml:lang="de">Individuum. Zutaten: Vollkornbrot, Ciabatta, Mayonnaise, Lachs, Avocado. Asserted als SandwichWithoutMeat. Es enthaelt Fisch (Lachs) und ist daher NICHT ohne Fisch.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#SalmonSandwich</IRI>
+        <Literal xml:lang="de">Lachs-Sandwich</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Sandwich</IRI>
+        <Literal xml:lang="de">Oberklasse aller Sandwiches. Notwendige Bedingungen fuer jedes Sandwich: genau 2 Brotzutaten (hasIngredient genau 2 Bread), mindestens eine Sauce (hasIngredient some Sauce) sowie mindestens 2 weitere Nicht-Brot-Zutaten (hasIngredient min 2 (SandwichIngredient and not Bread)). Disjunkt zu SandwichIngredient.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Sandwich</IRI>
+        <Literal xml:lang="de">Sandwich</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#SandwichIngredient</IRI>
+        <Literal xml:lang="de">Oberklasse aller Sandwich-Zutaten. Unterteilt in sechs disjunkte Kategorien: Bread, Sauce, Vegetable, Fish, Cheese, Meat (disjunkte Instanzmengen). Disjunkt zu Sandwich.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#SandwichIngredient</IRI>
+        <Literal xml:lang="de">Sandwich-Zutat</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#SandwichOnlyVegetables</IRI>
+        <Literal xml:lang="de">Definierte Klasse (notwendig und hinreichend): Sandwich and (hasIngredient only (Bread or Sauce or Vegetable)) - als Belag sind nur Gemuese erlaubt, neben dem obligatorischen Brot und der obligatorischen Sauce. Da Bread, Sauce und Vegetable disjunkt zu Meat und Fish sind, leitet der Reasoner automatisch ab, dass diese Klasse eine Unterklasse von SandwichWithoutMeat und SandwichWithoutFish ist. Damit wird die Anforderung &apos;Sandwiches nur mit Gemuese gehoeren auch zu ohne Fleisch und ohne Fisch&apos; per Reasoner realisiert (Polyhierarchie nicht manuell asserted - wie im Tutorial empfohlen).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#SandwichOnlyVegetables</IRI>
+        <Literal xml:lang="de">Sandwich nur mit Gemuese</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#SandwichWithoutFish</IRI>
+        <Literal xml:lang="de">Definierte Klasse (notwendig und hinreichend): Sandwich and (hasIngredient only (not Fish)) - keine Fisch-Zutat erlaubt.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#SandwichWithoutFish</IRI>
+        <Literal xml:lang="de">Sandwich ohne Fisch</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#SandwichWithoutMeat</IRI>
+        <Literal xml:lang="de">Definierte Klasse (notwendig und hinreichend): Sandwich and (hasIngredient only (not Meat)) - ein Sandwich, dessen Zutaten ausnahmslos kein Fleisch sind. Die All-Restriktion (&apos;only&apos;) verbietet jede Fleisch-Zutat.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#SandwichWithoutMeat</IRI>
+        <Literal xml:lang="de">Sandwich ohne Fleisch</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Sauce</IRI>
+        <Literal xml:lang="de">Sauce-Zutat (z. B. Ketchup, Mayonnaise, TomatoSauce).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Sauce</IRI>
+        <Literal xml:lang="de">Sauce</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#TomatoSauce</IRI>
+        <Literal xml:lang="de">Tomatensauce</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Tuna</IRI>
+        <Literal xml:lang="de">Thunfisch</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Vegetable</IRI>
+        <Literal xml:lang="de">Gemuese-Zutat (z. B. Cucumber, GreenSalad, Avocado, Basil). Basilikum wird der Einfachheit halber als Gemuese eingeordnet, da die Aufgabe nur die Kategorien Bread/Sauce/Vegetable/Fish/Cheese/Meat vorsieht.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Vegetable</IRI>
+        <Literal xml:lang="de">Gemuese</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#WhiteBread</IRI>
+        <Literal xml:lang="de">Weissbrot</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#WholeWheatBread</IRI>
+        <Literal xml:lang="de">Vollkornbrot</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#hasIngredient</IRI>
+        <Literal xml:lang="de">Objekt-Eigenschaft, die ein Sandwich mit seinen Zutaten verknuepft (Domain Sandwich, Range SandwichIngredient). Untersuchung der Eigenschaftsmerkmale (Aufgabenteil &quot;Charakteristika&quot;):
+- Funktional: NEIN. Ein Sandwich hat mehrere Zutaten (mind. 4), also nicht hoechstens eine.
+- Invers-funktional: NEIN. Dasselbe Zutaten-Individuum (z. B. &apos;baguette&apos; oder &apos;ciabatta&apos;) wird von mehreren Sandwiches verwendet; eine Zutat gehoert somit nicht zu hoechstens einem Sandwich. (Im Pizza-Begleitbeispiel ist hasTopping invers-funktional, weil dort jedes Topping-Individuum zu genau einer Pizza gehoert. Hier wurde bewusst anders modelliert, indem Zutaten-Individuen wiederverwendet werden.)
+- Transitiv: NEIN. Zutaten sind atomar und haben keine Unter-Zutaten. Ausserdem werden qualifizierte Kardinalitaeten (genau 2 Bread) sowie Asymmetrie/Irreflexivitaet benoetigt; diese sind in OWL-DL nur fuer einfache (nicht-transitive) Eigenschaften erlaubt.
+- Symmetrisch: NEIN. Wenn ein Sandwich eine Zutat hat, hat die Zutat nicht das Sandwich; Sandwich und SandwichIngredient sind disjunkt.
+- Asymmetrisch: JA (ausgewaehlt). Aus &apos;x hasIngredient y&apos; folgt &apos;nicht y hasIngredient x&apos;.
+- Reflexiv: NEIN. Ein Sandwich ist nicht seine eigene Zutat.
+- Irreflexiv: JA (ausgewaehlt). Nichts ist Zutat seiner selbst. (Folgt bereits aus der Asymmetrie, wird zur Verdeutlichung zusaetzlich angegeben.)
+Ausgewaehlt: asymmetrisch und irreflexiv.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#hasIngredient</IRI>
+        <Literal xml:lang="de">hat Zutat</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#isIngredientOf</IRI>
+        <Literal xml:lang="de">Inverse Rolle zu hasIngredient. Verknuepft eine Zutat mit dem Sandwich, in dem sie enthalten ist (Domain SandwichIngredient, Range Sandwich).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#isIngredientOf</IRI>
+        <Literal xml:lang="de">ist Zutat von</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
