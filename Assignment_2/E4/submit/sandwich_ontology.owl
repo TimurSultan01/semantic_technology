@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://example.org/sandwich#"
+     xml:base="http://example.org/sandwich"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+
+  <owl:Ontology rdf:about="http://example.org/sandwich">
+    <rdfs:comment xml:lang="en">Ontology for Exercise 4. It models sandwiches, sandwich ingredients, ingredient categories, the hasIngredient relation and its inverse isIngredientOf. The ontology is serialized in RDF/XML for Protégé.</rdfs:comment>
+  </owl:Ontology>
+
+  <!-- Main classes -->
+  <owl:Class rdf:about="#Sandwich">
+    <rdfs:comment xml:lang="en">A sandwich. Every sandwich must have exactly two bread ingredients, at least two non-bread ingredients, and at least one sauce.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="#hasIngredient"/>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:qualifiedCardinality>
+        <owl:onClass rdf:resource="#Bread"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="#hasIngredient"/>
+        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
+        <owl:onClass>
+          <owl:Class>
+            <owl:intersectionOf rdf:parseType="Collection">
+              <rdf:Description rdf:about="#SandwichIngredient"/>
+              <owl:Class>
+                <owl:complementOf rdf:resource="#Bread"/>
+              </owl:Class>
+            </owl:intersectionOf>
+          </owl:Class>
+        </owl:onClass>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="#hasIngredient"/>
+        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+        <owl:onClass rdf:resource="#Sauce"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+
+  <owl:Class rdf:about="#SandwichIngredient">
+    <rdfs:comment xml:lang="en">General class for ingredients that can be used in sandwiches.</rdfs:comment>
+  </owl:Class>
+
+  <!-- Sandwich categories -->
+  <owl:Class rdf:about="#VegetableOnlySandwich">
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+    <rdfs:subClassOf rdf:resource="#WithoutMeatSandwich"/>
+    <rdfs:subClassOf rdf:resource="#WithoutFishSandwich"/>
+    <rdfs:comment xml:lang="en">A sandwich category for sandwiches whose ingredients are restricted to bread, sauce and vegetables. Therefore this category is also without meat and without fish.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="#hasIngredient"/>
+        <owl:allValuesFrom>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <rdf:Description rdf:about="#Bread"/>
+              <rdf:Description rdf:about="#Sauce"/>
+              <rdf:Description rdf:about="#Vegetable"/>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+
+  <owl:Class rdf:about="#WithoutMeatSandwich">
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+    <rdfs:comment xml:lang="en">A sandwich category for sandwiches that must not have any meat ingredient.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="#hasIngredient"/>
+        <owl:allValuesFrom>
+          <owl:Class>
+            <owl:complementOf rdf:resource="#Meat"/>
+          </owl:Class>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+
+  <owl:Class rdf:about="#WithoutFishSandwich">
+    <rdfs:subClassOf rdf:resource="#Sandwich"/>
+    <rdfs:comment xml:lang="en">A sandwich category for sandwiches that must not have any fish ingredient.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="#hasIngredient"/>
+        <owl:allValuesFrom>
+          <owl:Class>
+            <owl:complementOf rdf:resource="#Fish"/>
+          </owl:Class>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+
+  <!-- Ingredient subclasses -->
+  <owl:Class rdf:about="#Bread">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredient"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Sauce">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredient"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Vegetable">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredient"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Fish">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredient"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Cheese">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredient"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Meat">
+    <rdfs:subClassOf rdf:resource="#SandwichIngredient"/>
+  </owl:Class>
+
+  <!-- Disjoint ingredient classes -->
+  <owl:AllDisjointClasses>
+    <owl:members rdf:parseType="Collection">
+      <rdf:Description rdf:about="#Bread"/>
+      <rdf:Description rdf:about="#Sauce"/>
+      <rdf:Description rdf:about="#Vegetable"/>
+      <rdf:Description rdf:about="#Fish"/>
+      <rdf:Description rdf:about="#Cheese"/>
+      <rdf:Description rdf:about="#Meat"/>
+    </owl:members>
+  </owl:AllDisjointClasses>
+
+  <!-- Object properties -->
+  <owl:ObjectProperty rdf:about="#hasIngredient">
+    <rdfs:domain rdf:resource="#Sandwich"/>
+    <rdfs:range rdf:resource="#SandwichIngredient"/>
+    <owl:inverseOf rdf:resource="#isIngredientOf"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+    <rdfs:comment xml:lang="en">hasIngredient links sandwiches to their ingredients. It is not functional because a sandwich has several ingredients. It is not inverse-functional because the same ingredient can occur in several sandwiches. It is not transitive because an ingredient of an ingredient should not automatically become an ingredient of the sandwich. It is not symmetric because if a sandwich has an ingredient, the ingredient does not have the sandwich as ingredient. Therefore the appropriate characteristics selected here are asymmetric and irreflexive.</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isIngredientOf">
+    <owl:inverseOf rdf:resource="#hasIngredient"/>
+    <rdfs:domain rdf:resource="#SandwichIngredient"/>
+    <rdfs:range rdf:resource="#Sandwich"/>
+    <rdfs:comment xml:lang="en">Inverse property of hasIngredient: an ingredient isIngredientOf a sandwich.</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <!-- Ingredient individuals -->
+  <owl:NamedIndividual rdf:about="#Ciabatta">
+    <rdf:type rdf:resource="#Bread"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#Baguette">
+    <rdf:type rdf:resource="#Bread"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#WhiteBread">
+    <rdf:type rdf:resource="#Bread"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#WholeWheatBread">
+    <rdf:type rdf:resource="#Bread"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="#Ketchup">
+    <rdf:type rdf:resource="#Sauce"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#Mayonnaise">
+    <rdf:type rdf:resource="#Sauce"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#TomatoSauce">
+    <rdf:type rdf:resource="#Sauce"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="#Cucumber">
+    <rdf:type rdf:resource="#Vegetable"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#GreenSalad">
+    <rdf:type rdf:resource="#Vegetable"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#Avocado">
+    <rdf:type rdf:resource="#Vegetable"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#Basil">
+    <rdf:type rdf:resource="#Vegetable"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="#Mozzarella">
+    <rdf:type rdf:resource="#Cheese"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="#Prosciutto">
+    <rdf:type rdf:resource="#Meat"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#Salami">
+    <rdf:type rdf:resource="#Meat"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="#Salmon">
+    <rdf:type rdf:resource="#Fish"/>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="#Tuna">
+    <rdf:type rdf:resource="#Fish"/>
+  </owl:NamedIndividual>
+
+  <!-- Make ingredients different so cardinality restrictions can be checked by a reasoner. -->
+  <owl:AllDifferent>
+    <owl:distinctMembers rdf:parseType="Collection">
+      <rdf:Description rdf:about="#Ciabatta"/>
+      <rdf:Description rdf:about="#Baguette"/>
+      <rdf:Description rdf:about="#WhiteBread"/>
+      <rdf:Description rdf:about="#WholeWheatBread"/>
+      <rdf:Description rdf:about="#Ketchup"/>
+      <rdf:Description rdf:about="#Mayonnaise"/>
+      <rdf:Description rdf:about="#TomatoSauce"/>
+      <rdf:Description rdf:about="#Cucumber"/>
+      <rdf:Description rdf:about="#GreenSalad"/>
+      <rdf:Description rdf:about="#Avocado"/>
+      <rdf:Description rdf:about="#Basil"/>
+      <rdf:Description rdf:about="#Mozzarella"/>
+      <rdf:Description rdf:about="#Prosciutto"/>
+      <rdf:Description rdf:about="#Salami"/>
+      <rdf:Description rdf:about="#Salmon"/>
+      <rdf:Description rdf:about="#Tuna"/>
+    </owl:distinctMembers>
+  </owl:AllDifferent>
+
+  <!-- Sandwich individuals -->
+  <owl:NamedIndividual rdf:about="#ItalianSandwich">
+    <rdf:type rdf:resource="#Sandwich"/>
+    <rdf:type rdf:resource="#WithoutFishSandwich"/>
+    <rdf:type rdf:resource="#WithoutMeatSandwich"/>
+    <hasIngredient rdf:resource="#Ciabatta"/>
+    <hasIngredient rdf:resource="#Baguette"/>
+    <hasIngredient rdf:resource="#TomatoSauce"/>
+    <hasIngredient rdf:resource="#Basil"/>
+    <hasIngredient rdf:resource="#Mozzarella"/>
+    <rdfs:comment xml:lang="en">Italian Sandwich has ciabatta, baguette, tomato sauce, basil and mozzarella. It is without meat and without fish.</rdfs:comment>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="#ProsciuttoSandwich">
+    <rdf:type rdf:resource="#Sandwich"/>
+    <rdf:type rdf:resource="#WithoutFishSandwich"/>
+    <hasIngredient rdf:resource="#WhiteBread"/>
+    <hasIngredient rdf:resource="#Baguette"/>
+    <hasIngredient rdf:resource="#Ketchup"/>
+    <hasIngredient rdf:resource="#Prosciutto"/>
+    <hasIngredient rdf:resource="#Cucumber"/>
+    <rdfs:comment xml:lang="en">Prosciutto Sandwich has white bread, baguette, ketchup, prosciutto and cucumber. It is without fish, but not without meat.</rdfs:comment>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="#SalmonSandwich">
+    <rdf:type rdf:resource="#Sandwich"/>
+    <rdf:type rdf:resource="#WithoutMeatSandwich"/>
+    <hasIngredient rdf:resource="#WholeWheatBread"/>
+    <hasIngredient rdf:resource="#Ciabatta"/>
+    <hasIngredient rdf:resource="#Mayonnaise"/>
+    <hasIngredient rdf:resource="#Salmon"/>
+    <hasIngredient rdf:resource="#Avocado"/>
+    <rdfs:comment xml:lang="en">Salmon Sandwich has whole-wheat bread, ciabatta, mayonnaise, salmon and avocado. It is without meat, but not without fish.</rdfs:comment>
+  </owl:NamedIndividual>
+
+</rdf:RDF>
